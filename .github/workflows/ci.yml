@@ -1,0 +1,26 @@
+name: Build and Upload
+
+on:
+  pull_request:
+    branches:
+      'main'
+
+jobs:
+  test:
+    name: Ensure we can download abq
+    runs-on: macos-10.15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: homebrew-fake-tap-name # give it a fake name so we don't accidentally pull the one from github
+
+      - name: move it to the right directory
+        run: |
+          mkdir -p homebrew-tap /usr/local/Homebrew/Library/Taps/rwx-research
+          mv homebrew-fake-tap-name /usr/local/Homebrew/Library/Taps/rwx-research/
+
+      - name: Install abq & run it
+        run: |
+          brew install rwx-research/fake-tap-name/abq --no-quarantine
+          abq --version
