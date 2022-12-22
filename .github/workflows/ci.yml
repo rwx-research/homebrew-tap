@@ -11,9 +11,11 @@ jobs:
     runs-on: macos-10.15
     strategy:
       matrix:
-        version:
-          - abq
-          - abq@v1
+        include:
+          - name: abq
+            version: "1.0.2"
+          - name: abq@v1
+            version: "1.0.2"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,5 +29,5 @@ jobs:
 
       - name: Install abq & run it
         run: |
-          brew install rwx-research/fake-tap-name/${{ matrix.version }}
-          abq --version
+          brew install rwx-research/fake-tap-name/${{ matrix.name }}
+          abq --version | grep ${{ matrix.version }}
