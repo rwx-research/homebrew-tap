@@ -14,7 +14,7 @@ jobs:
         include:
           - name: abq
             version: "1.0.2"
-          - name: abq@v1
+          - name: abq@1
             version: "1.0.2"
     steps:
       - name: Checkout code
