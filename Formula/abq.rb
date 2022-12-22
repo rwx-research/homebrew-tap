@@ -1,16 +1,16 @@
 class Abq < Formula
   desc "Always Be Queueing - Run your tests in parallel"
   homepage "https://abq.build/"
-  version "1.0.1"
+  version "1.0.2"
 
   if OS.mac? && Hardware::CPU.intel?
     url "https://abq.build/api/downloads/#{version}?os=darwin&arch=x86-64", user_agent: :fake
-    sha256 "31e7ad9c33127a91baa5d7ea8b11893bca551fc98c88ef1b3bd81bb608af0fa3"
+    sha256 "028c2a385b18284444be839f2a3c02526863a0b4b022f4614b65bffb8bd165f0"
   end
 
   if OS.mac? && Hardware::CPU.arm?
     url "https://abq.build/api/downloads/#{version}?os=darwin&arch=aarch64", user_agent: :fake
-    sha256 "9fe9ee284c241e1a6e4c69f6c02d59a53433d291f607b4e3aebbb52bed4097b2"
+    sha256 "16fdeb149ec1ee25b34bb315258388e11b97f69369d5c3befe29db98bf71feb5"
   end
 
   def install
