@@ -12,4 +12,4 @@ or
 brew install rwx-research/tap/abq@1
 ```
 
-to be more conservative about version changes.
+to disable major version updates with `brew upgrade`.
