@@ -13,9 +13,9 @@ jobs:
       matrix:
         include:
           - name: abq
-            version: "1.0.6"
+            version: "1.0.8"
           - name: abq@1
-            version: "1.0.6"
+            version: "1.0.8"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
