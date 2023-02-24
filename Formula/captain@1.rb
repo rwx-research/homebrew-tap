@@ -15,7 +15,7 @@ class CaptainAT1 < Formula
 
   def install
     bin.install "captain"
-  endc
+  end
 
   test do
     system "#{bin}/captain --version"
