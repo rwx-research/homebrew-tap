@@ -6,9 +6,8 @@ on:
       'main'
 
 jobs:
-  test:
-    name: Ensure we can download abq
-    runs-on: macos-10.15
+  test_abq:
+    runs-on: macos-11
     strategy:
       matrix:
         include:
@@ -17,8 +16,7 @@ jobs:
           - name: abq@1
             version: "1.1.2"
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           path: homebrew-fake-tap-name # give it a fake name so we don't accidentally pull the one from github
 
@@ -31,3 +29,27 @@ jobs:
         run: |
           brew install rwx-research/fake-tap-name/${{ matrix.name }}
           abq --version | grep ${{ matrix.version }}
+
+  test_captain:
+    runs-on: macos-11
+    strategy:
+      matrix:
+        include:
+          - name: captain
+            version: "1.5.4"
+          - name: captain@1
+            version: "1.5.4"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: homebrew-fake-tap-name # give it a fake name so we don't accidentally pull the one from github
+
+      - name: move it to the right directory
+        run: |
+          mkdir -p homebrew-tap /usr/local/Homebrew/Library/Taps/rwx-research
+          mv homebrew-fake-tap-name /usr/local/Homebrew/Library/Taps/rwx-research/
+
+      - name: Install captain & run it
+        run: |
+          brew install rwx-research/fake-tap-name/${{ matrix.name }}
+          captain --version | grep ${{ matrix.version }}
