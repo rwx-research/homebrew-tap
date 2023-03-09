@@ -2,8 +2,7 @@ name: Build and Upload
 
 on:
   pull_request:
-    branches:
-      'main'
+    branches: "main"
 
 jobs:
   test_abq:
@@ -12,9 +11,9 @@ jobs:
       matrix:
         include:
           - name: abq
-            version: "1.1.2"
+            version: "1.2.0"
           - name: abq@1
-            version: "1.1.2"
+            version: "1.2.0"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -36,9 +35,9 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "1.6.5"
+            version: "1.6.9"
           - name: captain@1
-            version: "1.6.5"
+            version: "1.6.9"
     steps:
       - uses: actions/checkout@v3
         with:
