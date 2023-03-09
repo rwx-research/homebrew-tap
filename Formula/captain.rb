@@ -1,16 +1,16 @@
 class Captain < Formula
   desc "Captain - CI and Test Analytics"
   homepage "https://captain.build/"
-  version "1.6.5"
+  version "1.6.9"
 
   if OS.mac? && Hardware::CPU.intel?
     url "https://releases.captain.build/v#{version}/darwin/x86_64/captain", user_agent: :fake
-    sha256 "37697cef1fce1dd31f13f98c03d4ca14088ca512d4149844a18e9065c18d1053"
+    sha256 "19497726f50defd73be0bf1ad544791bbacb36020d39ace0aff32318d4d6939b"
   end
 
   if OS.mac? && Hardware::CPU.arm?
     url "https://releases.captain.build/v#{version}/darwin/aarch64/captain", user_agent: :fake
-    sha256 "5ddc0f9282078f669834201851e8923828265803364269eb4f931ee144d441bd"
+    sha256 "7bc948cce998d0f842d7e02283edfb94a4bf91919037d880490c3be2d7b85e97"
   end
 
   def install
