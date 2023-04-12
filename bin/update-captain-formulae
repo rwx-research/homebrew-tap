@@ -2,35 +2,47 @@
 
 set -euo pipefail
 
-if [[ "$#" -ne 2 ]]; then
-  >&2 echo "Usage: $0 OLD.X.X NEW.Y.Y"
+if [[ "$#" -ne 1 ]]; then
+  >&2 echo "Usage: $0 X.X.X"
   exit 2
 fi
 
-oldVersion=$1
-newVersion=$2
+oldVersion=$(grep -E "version \"\d+\.\d+\.\d+\"" ./Formula/captain.rb | sed -E "s/.*version \"(.+)\".*/\1/")
+newVersion=$1
+
+if [[ "${oldVersion}" == "${newVersion}" ]]; then
+  echo "Exiting early... the version is already ${newVersion}"
+  exit 0
+fi
 
 mkdir -p tmp
 
-echo "Getting SHA256 of https://releases.captain.build/v${oldVersion}/darwin/aarch64/captain"
-curl "https://releases.captain.build/v${oldVersion}/darwin/aarch64/captain" -o ./tmp/captain --fail-with-body --silent
-oldAarch64SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
-rm ./tmp/captain
+function getSHA() {
+  url=$1
+  expectedVersion=$2
 
-echo "Getting SHA256 of https://releases.captain.build/v${oldVersion}/darwin/x86_64/captain"
-curl "https://releases.captain.build/v${oldVersion}/darwin/x86_64/captain" -o ./tmp/captain --fail-with-body --silent
-oldX8664SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
-rm ./tmp/captain
+  curl "${url}" -o ./tmp/captain --fail-with-body --silent -L
+  sha=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
 
-echo "Getting SHA256 of https://releases.captain.build/v${newVersion}/darwin/aarch64/captain"
-curl "https://releases.captain.build/v${newVersion}/darwin/aarch64/captain" -o ./tmp/captain --fail-with-body --silent
-newAarch64SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
-rm ./tmp/captain
+  chmod +x ./tmp/captain
+  output=$(./tmp/captain --version)e
+  if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then
+    rm ./tmp/captain
+    echo "The binary at ${url} did not produce the expected version "
+    echo "Output:"
+    echo "${output}"
+    exit 1
+  fi
 
-echo "Getting SHA256 of https://releases.captain.build/v${newVersion}/darwin/x86_64/captain"
-curl "https://releases.captain.build/v${newVersion}/darwin/x86_64/captain" -o ./tmp/captain --fail-with-body --silent
-newX8664SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
-rm ./tmp/captain
+  rm ./tmp/captain
+  echo "${sha}"
+}
+
+echo "Calculating the SHA256 of the binaries"
+oldAarch64SHA=$(getSHA "https://releases.captain.build/v${oldVersion}/darwin/aarch64/captain" "${oldVersion}")
+oldX8664SHA=$(getSHA "https://releases.captain.build/v${oldVersion}/darwin/x86_64/captain" "${oldVersion}")
+newAarch64SHA=$(getSHA "https://releases.captain.build/v${newVersion}/darwin/aarch64/captain" "${newVersion}")
+newX8664SHA=$(getSHA "https://releases.captain.build/v${newVersion}/darwin/x86_64/captain" "${newVersion}")
 
 echo "Updating formulae and tests"
 sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/captain.rb"
