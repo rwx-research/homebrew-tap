@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$#" -ne 2 ]]; then
+  >&2 echo "Usage: $0 OLD.X.X NEW.Y.Y"
+  exit 2
+fi
+
+oldVersion=$1
+newVersion=$2
+
+mkdir -p tmp
+
+echo "Getting SHA256 of https://releases.captain.build/v${oldVersion}/darwin/aarch64/captain"
+curl "https://releases.captain.build/v${oldVersion}/darwin/aarch64/captain" -o ./tmp/captain --fail-with-body --silent
+oldAarch64SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
+rm ./tmp/captain
+
+echo "Getting SHA256 of https://releases.captain.build/v${oldVersion}/darwin/x86_64/captain"
+curl "https://releases.captain.build/v${oldVersion}/darwin/x86_64/captain" -o ./tmp/captain --fail-with-body --silent
+oldX8664SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
+rm ./tmp/captain
+
+echo "Getting SHA256 of https://releases.captain.build/v${newVersion}/darwin/aarch64/captain"
+curl "https://releases.captain.build/v${newVersion}/darwin/aarch64/captain" -o ./tmp/captain --fail-with-body --silent
+newAarch64SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
+rm ./tmp/captain
+
+echo "Getting SHA256 of https://releases.captain.build/v${newVersion}/darwin/x86_64/captain"
+curl "https://releases.captain.build/v${newVersion}/darwin/x86_64/captain" -o ./tmp/captain --fail-with-body --silent
+newX8664SHA=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
+rm ./tmp/captain
+
+echo "Updating formulae and tests"
+sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/captain.rb"
+sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/captain@1.rb"
+sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/version \"${newAarch64SHA}\"/" "./Formula/captain.rb"
+sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/version \"${newAarch64SHA}\"/" "./Formula/captain@1.rb"
+sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/version \"${newX8664SHA}\"/" "./Formula/captain.rb"
+sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/version \"${newX8664SHA}\"/" "./Formula/captain@1.rb"
+sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/ci.yml"
+echo "Done!"
