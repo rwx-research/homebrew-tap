@@ -24,8 +24,12 @@ jobs:
 
       - name: Install abq & run it
         run: |
-          brew install rwx-research/fake-tap-name/${{ matrix.name }}
+          set -o pipefail
+          brew install rwx-research/fake-tap-name/${{ matrix.name }} 2>&1 | tee install-output.txt
           abq --version | grep ${{ matrix.version }}
+
+      - name: Ensure the integrity was verified
+        run: '! grep "Cannot verify integrity of" install-output.txt'
 
   test_captain:
     runs-on: macos-11
@@ -33,9 +37,9 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "1.10.2"
+            version: "1.10.3"
           - name: captain@1
-            version: "1.10.2"
+            version: "1.10.3"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -48,5 +52,9 @@ jobs:
 
       - name: Install captain & run it
         run: |
-          brew install rwx-research/fake-tap-name/${{ matrix.name }}
+          set -o pipefail
+          brew install rwx-research/fake-tap-name/${{ matrix.name }} 2>&1 | tee install-output.txt
           captain --version | grep ${{ matrix.version }}
+
+      - name: Ensure the integrity was verified
+        run: '! grep "Cannot verify integrity of" install-output.txt'
