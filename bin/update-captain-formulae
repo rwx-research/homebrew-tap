@@ -25,12 +25,12 @@ function getSHA() {
   sha=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
 
   chmod +x ./tmp/captain
-  output=$(./tmp/captain --version)e
+  output=$(./tmp/captain --version)
   if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then
     rm ./tmp/captain
-    echo "The binary at ${url} did not produce the expected version "
-    echo "Output:"
-    echo "${output}"
+    echo "The binary at ${url} did not produce the expected version " 1>&2
+    echo "Output:" 1>&2
+    echo "${output}" 1>&2
     exit 1
   fi
 
@@ -51,5 +51,5 @@ sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./For
 sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/captain@1.rb"
 sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/captain.rb"
 sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/captain@1.rb"
-sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/ci.yml"
+sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/captain-ci.yml"
 echo "Done!"
