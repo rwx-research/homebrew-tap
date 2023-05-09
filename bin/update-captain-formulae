@@ -25,7 +25,7 @@ function getSHA() {
   sha=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
 
   chmod +x ./tmp/captain
-  output=$(./tmp/captain --version)e
+  output=$(./tmp/captain --version)
   if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then
     rm ./tmp/captain
     echo "The binary at ${url} did not produce the expected version "
