@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$#" -ne 1 ]]; then
+  >&2 echo "Usage: $0 X.X.X"
+  exit 2
+fi
+
+oldVersion=$(grep -E "version \"\d+\.\d+\.\d+\"" ./Formula/abq.rb | sed -E "s/.*version \"(.+)\".*/\1/")
+newVersion=$1
+
+if [[ "${oldVersion}" == "${newVersion}" ]]; then
+  echo "Exiting early... the version is already ${newVersion}"
+  exit 0
+fi
+
+mkdir -p tmp
+
+function getSHA() {
+  url=$1
+  expectedVersion=$2
+  fake_user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/602.4.8 (KHTML, like Gecko) Version/10.0.3 Safari/602.4.8"
+
+  curl --user-agent "${fake_user_agent}" "${url}" -o ./tmp/abq.tar --fail-with-body --silent -L
+  sha=$(sha256sum ./tmp/abq.tar | cut -d ' ' -f 1)
+
+  (cd tmp && tar -xvf abq.tar && mv abq_*/abq ./ && cd -) &>/dev/null
+  chmod +x ./tmp/abq
+  output=$(./tmp/abq --version)
+  if ! (echo "${output}" | grep "abq ${expectedVersion}" &>/dev/null); then
+    rm -r ./tmp/abq*
+    echo "The binary at ${url} did not produce the expected version " 1>&2
+    echo "Output:" 1>&2
+    echo "${output}" 1>&2
+    exit 1
+  fi
+
+  rm -r ./tmp/abq*
+  echo "${sha}"
+}
+
+echo "Calculating the SHA256 of the binaries"
+oldAarch64SHA=$(getSHA "https://abq.build/api/downloads/${oldVersion}?os=darwin&arch=aarch64" "${oldVersion}")
+oldX8664SHA=$(getSHA "https://abq.build/api/downloads/${oldVersion}?os=darwin&arch=x86-64" "${oldVersion}")
+newAarch64SHA=$(getSHA "https://abq.build/api/downloads/${newVersion}?os=darwin&arch=aarch64" "${newVersion}")
+newX8664SHA=$(getSHA "https://abq.build/api/downloads/${newVersion}?os=darwin&arch=x86-64" "${newVersion}")
+
+echo "Updating formulae and tests"
+sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq.rb"
+sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq@1.rb"
+sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/abq.rb"
+sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/abq@1.rb"
+sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/abq.rb"
+sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/abq@1.rb"
+sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/abq-ci.yml"
+echo "Done!"

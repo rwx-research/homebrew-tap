@@ -28,9 +28,9 @@ function getSHA() {
   output=$(./tmp/captain --version)
   if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then
     rm ./tmp/captain
-    echo "The binary at ${url} did not produce the expected version "
-    echo "Output:"
-    echo "${output}"
+    echo "The binary at ${url} did not produce the expected version " 1>&2
+    echo "Output:" 1>&2
+    echo "${output}" 1>&2
     exit 1
   fi
 
