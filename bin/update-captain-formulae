@@ -51,5 +51,5 @@ sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./For
 sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/captain@1.rb"
 sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/captain.rb"
 sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/captain@1.rb"
-sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/ci.yml"
+sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/captain-ci.yml"
 echo "Done!"
