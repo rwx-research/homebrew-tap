@@ -9,9 +9,9 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "1.11.1"
+            version: "1.11.2"
           - name: captain@1
-            version: "1.11.1"
+            version: "1.11.2"
     steps:
       - uses: actions/checkout@v3
         with:
