@@ -9,9 +9,9 @@ jobs:
       matrix:
         include:
           - name: abq
-            version: "1.6.0"
+            version: "1.6.1"
           - name: abq@1
-            version: "1.6.0"
+            version: "1.6.1"
     steps:
       - uses: actions/checkout@v3
         with:
