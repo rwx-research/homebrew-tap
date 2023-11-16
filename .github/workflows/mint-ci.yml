@@ -1,0 +1,30 @@
+on:
+  pull_request:
+    branches: "main"
+
+jobs:
+  test_mint:
+    runs-on: macos-11
+    strategy:
+      matrix:
+        include:
+          - name: mint
+            version: "0.0.2"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: homebrew-fake-tap-name # give it a fake name so we don't accidentally pull the one from github
+
+      - name: move it to the right directory
+        run: |
+          mkdir -p homebrew-tap /usr/local/Homebrew/Library/Taps/rwx-research
+          mv homebrew-fake-tap-name /usr/local/Homebrew/Library/Taps/rwx-research/
+
+      - name: Install mint & run it
+        run: |
+          set -o pipefail
+          brew install rwx-research/fake-tap-name/${{ matrix.name }} 2>&1 | tee install-output.txt
+          mint --version | grep ${{ matrix.version }}
+
+      - name: Ensure the integrity was verified
+        run: '! grep "Cannot verify integrity of" install-output.txt'
