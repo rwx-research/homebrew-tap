@@ -33,3 +33,19 @@ This script will:
 - Ensure they produce the expected version
 - Replace the old version references with the new version
 - Replace the old SHA256 references with the new ones
+
+### Updating the version of Mint
+
+```sh
+bin/update-mint-formulae X.X.X
+```
+
+This script will:
+- Fetch the old binaries
+- SHA256 them
+- Ensure they produce the expected version
+- Fetch the new binaries
+- SHA256 them
+- Ensure they produce the expected version
+- Replace the old version references with the new version
+- Replace the old SHA256 references with the new ones
