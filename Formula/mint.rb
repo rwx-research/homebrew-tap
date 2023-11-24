@@ -14,7 +14,8 @@ class Mint < Formula
   end
 
   def install
-    bin.install 'mint'
+    filename = Hardware::CPU.intel? ? 'mint-darwin-x86_64' : 'mint-darwin-aarch64'
+    bin.install filename => 'mint'
   end
 
   test do
