@@ -1,6 +1,6 @@
 class Abq < Formula
-  desc "Always Be Queueing - Run your tests in parallel"
-  homepage "https://abq.build"
+  desc "ABQ is the most efficient parallel test runner due to its queue-based distribution"
+  homepage "https://www.rwx.com/abq"
   version "1.6.3"
 
   if OS.mac? && Hardware::CPU.intel?

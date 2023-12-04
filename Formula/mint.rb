@@ -1,5 +1,5 @@
 class Mint < Formula
-  desc "Mint - A language-agnostic build tool designed to accelerate engineering feedback loops and lower CI costs"
+  desc "Mint is the CI platform with the best developer experience, powering the fastest builds"
   homepage "https://www.rwx.com/mint"
   version "0.0.4"
 

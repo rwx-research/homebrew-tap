@@ -1,6 +1,6 @@
 class Captain < Formula
-  desc "Captain - CI and Test Analytics"
-  homepage "https://captain.build"
+  desc "Captain can detect and quarantine flaky tests, automatically retry failed tests, partition files for parallel execution, and more"
+  homepage "https://www.rwx.com/captain"
   version "1.11.6"
 
   if OS.mac? && Hardware::CPU.intel?
