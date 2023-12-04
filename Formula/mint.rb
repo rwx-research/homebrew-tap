@@ -1,16 +1,16 @@
 class Mint < Formula
   desc "Mint - A language-agnostic build tool designed to accelerate engineering feedback loops and lower CI costs"
   homepage "https://www.rwx.com/mint"
-  version "0.0.4"
+  version "0.0.5"
 
   if OS.mac? && Hardware::CPU.intel?
     url "https://github.com/rwx-research/mint-cli/releases/download/v#{version}/mint-darwin-x86_64", user_agent: :fake
-    sha256 "17bf37a5e0573430d6fdf8f78aa6752ff1e456cd38b51ab6669991fb3c6689a5"
+    sha256 "f03d6038178eae7414ac360705d52b641f08ffa55942fed37d7092df2ce4ca0e"
   end
 
   if OS.mac? && Hardware::CPU.arm?
     url "https://github.com/rwx-research/mint-cli/releases/download/v#{version}/mint-darwin-aarch64", user_agent: :fake
-    sha256 "2362d267d1c68422adb9f67268c327b431da98cd3838cb97fcd5aa57ee956165"
+    sha256 "15a4f34a3af16364d3708e965f2f8164673070fa395dec615fa4f6df98c93837"
   end
 
   def install
