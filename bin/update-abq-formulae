@@ -41,10 +41,10 @@ function getSHA() {
 }
 
 echo "Calculating the SHA256 of the binaries"
-oldAarch64SHA=$(getSHA "https://abq.build/api/downloads/${oldVersion}?os=darwin&arch=aarch64" "${oldVersion}")
-oldX8664SHA=$(getSHA "https://abq.build/api/downloads/${oldVersion}?os=darwin&arch=x86-64" "${oldVersion}")
-newAarch64SHA=$(getSHA "https://abq.build/api/downloads/${newVersion}?os=darwin&arch=aarch64" "${newVersion}")
-newX8664SHA=$(getSHA "https://abq.build/api/downloads/${newVersion}?os=darwin&arch=x86-64" "${newVersion}")
+oldAarch64SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${oldVersion}?os=darwin&arch=aarch64" "${oldVersion}")
+oldX8664SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${oldVersion}?os=darwin&arch=x86-64" "${oldVersion}")
+newAarch64SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${newVersion}?os=darwin&arch=aarch64" "${newVersion}")
+newX8664SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${newVersion}?os=darwin&arch=x86-64" "${newVersion}")
 
 echo "Updating formulae and tests"
 sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq.rb"
