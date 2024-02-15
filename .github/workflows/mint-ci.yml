@@ -10,10 +10,10 @@ jobs:
       matrix:
         include:
           - name: mint
-            version: "0.1.0"
+            version: "0.1.1"
             os: macos-12 # intel
           - name: mint
-            version: "0.1.0"
+            version: "0.1.1"
             os: macos-14 # arm
     steps:
       - uses: actions/checkout@v3
