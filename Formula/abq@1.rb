@@ -14,7 +14,7 @@ class AbqAT1 < Formula
   else
     if Hardware::CPU.intel?
       url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=linux&arch=x86-64", user_agent: :fake
-      sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      sha256 "9c64213c07b54cdc526fc436389b77d31a72be9fdb6a58d9a893c11a9c4c55e4"
     end
   end
 
