@@ -24,6 +24,11 @@ function getSHA() {
   curl "${url}" -o ./tmp/captain --fail-with-body --silent -L
   sha=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
 
+  if [[ "$url" == *"linux"* ]]; then
+    echo "${sha}"
+    return
+  fi
+
   chmod +x ./tmp/captain
   output=$(./tmp/captain --version)
   if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then
@@ -41,15 +46,25 @@ function getSHA() {
 echo "Calculating the SHA256 of the binaries"
 oldAarch64SHA=$(getSHA "https://releases.captain.build/v${oldVersion}/darwin/aarch64/captain" "${oldVersion}")
 oldX8664SHA=$(getSHA "https://releases.captain.build/v${oldVersion}/darwin/x86_64/captain" "${oldVersion}")
+oldLinuxX8664SHA=$(getSHA "https://releases.captain.build/v${oldVersion}/linux/x86_64/captain" "${oldVersion}")
 newAarch64SHA=$(getSHA "https://releases.captain.build/v${newVersion}/darwin/aarch64/captain" "${newVersion}")
 newX8664SHA=$(getSHA "https://releases.captain.build/v${newVersion}/darwin/x86_64/captain" "${newVersion}")
+newLinuxX8664SHA=$(getSHA "https://releases.captain.build/v${newVersion}/linux/x86_64/captain" "${newVersion}")
 
 echo "Updating formulae and tests"
+
 sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/captain.rb"
 sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/captain@1.rb"
+
 sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/captain.rb"
 sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/captain@1.rb"
+
 sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/captain.rb"
 sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/captain@1.rb"
+
+sed -i '' -e "s/sha256 \"${oldLinuxX8664SHA}\"/sha256 \"${newLinuxX8664SHA}\"/" "./Formula/captain.rb"
+sed -i '' -e "s/sha256 \"${oldLinuxX8664SHA}\"/sha256 \"${newLinuxX8664SHA}\"/" "./Formula/captain@1.rb"
+
 sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/captain-ci.yml"
+
 echo "Done!"

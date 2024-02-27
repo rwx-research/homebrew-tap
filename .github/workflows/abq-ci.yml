@@ -15,6 +15,7 @@ jobs:
           - name: abq
             version: "1.7.4"
             os: macos-14 # arm
+
           - name: abq@1
             version: "1.7.4"
             os: macos-12 # intel
@@ -33,3 +34,23 @@ jobs:
 
       - name: Ensure the integrity was verified
         run: '! grep "Cannot verify integrity of" install-output.txt'
+
+  test_abq_linux:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: abq
+            version: "1.7.4"
+          - name: abq@1
+            version: "1.7.4"
+    steps:
+      - name: Install homebrew
+        uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
+      - name: Install abq & run it
+        run: |
+          set -o pipefail
+          ! command -v abq
+          brew install ${{ matrix.name }}
+          abq --version | grep ${{ matrix.version }}

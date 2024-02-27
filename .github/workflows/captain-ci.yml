@@ -15,12 +15,14 @@ jobs:
           - name: captain
             version: "1.11.7"
             os: macos-14 # arm
+
           - name: captain@1
             version: "1.11.7"
             os: macos-12 # intel
           - name: captain@1
             version: "1.11.7"
             os: macos-14 # arm
+
     steps:
       - uses: actions/checkout@v3
 
@@ -33,3 +35,23 @@ jobs:
 
       - name: Ensure the integrity was verified
         run: '! grep "Cannot verify integrity of" install-output.txt'
+
+  test_captain_linux:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: captain
+            version: "1.11.7"
+          - name: captain@1
+            version: "1.11.7"
+    steps:
+      - name: Install homebrew
+        uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
+      - name: Install captain
+        run: |
+          set -o pipefail
+          ! command -v abq
+          brew install ${{ matrix.name }}
+          captain --version | grep ${{ matrix.version }}
