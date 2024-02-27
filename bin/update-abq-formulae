@@ -49,6 +49,7 @@ newX8664SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${newVersion}?os=d
 newLinuxX8664SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${newVersion}?os=linux&arch=x86-64" "${newVersion}")
 
 echo "Updating formulae and tests"
+
 sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq.rb"
 sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq@1.rb"
 
