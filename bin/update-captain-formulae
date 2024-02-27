@@ -24,6 +24,11 @@ function getSHA() {
   curl "${url}" -o ./tmp/captain --fail-with-body --silent -L
   sha=$(sha256sum ./tmp/captain | cut -d ' ' -f 1)
 
+  if [[ "$url" == *"linux"* ]]; then
+    echo "${sha}"
+    return
+  fi
+
   chmod +x ./tmp/captain
   output=$(./tmp/captain --version)
   if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then

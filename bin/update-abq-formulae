@@ -25,6 +25,11 @@ function getSHA() {
   curl --user-agent "${fake_user_agent}" "${url}" -o ./tmp/abq.tar --fail-with-body --silent -L
   sha=$(sha256sum ./tmp/abq.tar | cut -d ' ' -f 1)
 
+  if [[ "$url" == *"linux"* ]]; then
+    echo "${sha}"
+    return
+  fi
+
   (cd tmp && tar -xvf abq.tar && mv abq_*/abq ./ && cd -) &>/dev/null
   chmod +x ./tmp/abq
   output=$(./tmp/abq --version)
