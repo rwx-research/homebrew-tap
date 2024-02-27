@@ -10,11 +10,12 @@ class AbqAT1 < Formula
     elsif Hardware::CPU.arm?
       url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=darwin&arch=aarch64", user_agent: :fake
       sha256 "818d48e9cdae3e88718affbafaa34cd0a474beea097c7ce0e5fdba5e3fa2a1ed"
-    else
-      depends_on arch: [:intel, :arm64]
     end
   else
-    depends_on :macos
+    if Hardware::CPU.intel?
+      url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=linux&arch=x86-64", user_agent: :fake
+      sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    end
   end
 
   def install
