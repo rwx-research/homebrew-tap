@@ -52,6 +52,6 @@ jobs:
       - name: Install captain
         run: |
           set -o pipefail
-          ! command -v abq
+          ! command -v captain
           brew install ${{ matrix.name }}
           captain --version | grep ${{ matrix.version }}

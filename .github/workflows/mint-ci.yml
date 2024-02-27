@@ -42,6 +42,6 @@ jobs:
       - name: Install mint
         run: |
           set -o pipefail
-          ! command -v abq
+          ! command -v mint
           brew install rwx-research/tap/${{ matrix.name }}
           mint --version | grep ${{ matrix.version }}
