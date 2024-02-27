@@ -10,8 +10,6 @@ class Abq < Formula
     elsif Hardware::CPU.arm?
       url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=darwin&arch=aarch64", user_agent: :fake
       sha256 "818d48e9cdae3e88718affbafaa34cd0a474beea097c7ce0e5fdba5e3fa2a1ed"
-    else
-      depends_on arch: [:intel, :arm64]
     end
   else
     if Hardware::CPU.intel?
