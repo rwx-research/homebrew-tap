@@ -15,12 +15,20 @@ jobs:
           - name: captain
             version: "1.11.7"
             os: macos-14 # arm
+          - name: captain
+            version: "1.11.7"
+            os: ubuntu-latest
+
           - name: captain@1
             version: "1.11.7"
             os: macos-12 # intel
           - name: captain@1
             version: "1.11.7"
             os: macos-14 # arm
+          - name: captain@1
+            version: "1.11.7"
+            os: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 

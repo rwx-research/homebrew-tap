@@ -15,12 +15,19 @@ jobs:
           - name: abq
             version: "1.7.4"
             os: macos-14 # arm
+          - name: abq
+            version: "1.7.4"
+            os: ubuntu-latest
+
           - name: abq@1
             version: "1.7.4"
             os: macos-12 # intel
           - name: abq@1
             version: "1.7.4"
             os: macos-14 # arm
+          - name: abq@1
+            version: "1.7.4"
+            os: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
