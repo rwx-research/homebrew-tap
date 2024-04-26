@@ -7,7 +7,7 @@ if [[ "$#" -ne 1 ]]; then
   exit 2
 fi
 
-oldVersion=$(grep -E "version \"\d+\.\d+\.\d+\"" ./Formula/abq.rb | sed -E "s/.*version \"(.+)\".*/\1/")
+oldVersion=$(grep -E "version \"\d+\.\d+\.\d+\"" ./Formula/abq.rb | /usr/bin/sed -E "s/.*version \"(.+)\".*/\1/")
 newVersion=$1
 
 if [[ "${oldVersion}" == "${newVersion}" ]]; then
@@ -55,17 +55,17 @@ newLinuxX8664SHA=$(getSHA "https://cloud.rwx.com/abq/api/downloads/${newVersion}
 
 echo "Updating formulae and tests"
 
-sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq.rb"
-sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq@1.rb"
+/usr/bin/sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq.rb"
+/usr/bin/sed -i '' -e "s/version \"${oldVersion}\"/version \"${newVersion}\"/" "./Formula/abq@1.rb"
 
-sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/abq.rb"
-sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/abq@1.rb"
+/usr/bin/sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/abq.rb"
+/usr/bin/sed -i '' -e "s/sha256 \"${oldAarch64SHA}\"/sha256 \"${newAarch64SHA}\"/" "./Formula/abq@1.rb"
 
-sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/abq.rb"
-sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/abq@1.rb"
+/usr/bin/sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/abq.rb"
+/usr/bin/sed -i '' -e "s/sha256 \"${oldX8664SHA}\"/sha256 \"${newX8664SHA}\"/" "./Formula/abq@1.rb"
 
-sed -i '' -e "s/sha256 \"${oldLinuxX8664SHA}\"/sha256 \"${newLinuxX8664SHA}\"/" "./Formula/abq.rb"
-sed -i '' -e "s/sha256 \"${oldLinuxX8664SHA}\"/sha256 \"${newLinuxX8664SHA}\"/" "./Formula/abq@1.rb"
+/usr/bin/sed -i '' -e "s/sha256 \"${oldLinuxX8664SHA}\"/sha256 \"${newLinuxX8664SHA}\"/" "./Formula/abq.rb"
+/usr/bin/sed -i '' -e "s/sha256 \"${oldLinuxX8664SHA}\"/sha256 \"${newLinuxX8664SHA}\"/" "./Formula/abq@1.rb"
 
-sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/abq-ci.yml"
+/usr/bin/sed -i '' -e "s/version: \"${oldVersion}\"/version: \"${newVersion}\"/" "./.github/workflows/abq-ci.yml"
 echo "Done!"
