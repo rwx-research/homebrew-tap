@@ -1,20 +1,20 @@
 class AbqAT1 < Formula
   desc "ABQ is the most efficient parallel test runner due to its queue-based distribution"
   homepage "https://www.rwx.com/abq"
-  version "1.7.4"
+  version "1.8.0"
 
   if OS.mac?
     if Hardware::CPU.intel?
       url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=darwin&arch=x86-64", user_agent: :fake
-      sha256 "d76b514dc34ea7322f463b7e470e3cea0305d72a11ff81cc591aea1ddbb20e70"
+      sha256 "1fdd648a6ff963d393341f2a68beb6192c602a6bc0f280a33ac21e7d86870e8f"
     elsif Hardware::CPU.arm?
       url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=darwin&arch=aarch64", user_agent: :fake
-      sha256 "818d48e9cdae3e88718affbafaa34cd0a474beea097c7ce0e5fdba5e3fa2a1ed"
+      sha256 "f5471070dd1ffd895f2baccef78783f2e871475eff5e6b57a56e472d4a869465"
     end
   else
     if Hardware::CPU.intel?
       url "https://cloud.rwx.com/abq/api/downloads/#{version}?os=linux&arch=x86-64", user_agent: :fake
-      sha256 "9c64213c07b54cdc526fc436389b77d31a72be9fdb6a58d9a893c11a9c4c55e4"
+      sha256 "e2ee968bc56b95c538ef33f0150f874b9c1efc93afc26da0efaf1ad85c77c53d"
     end
   end
 
