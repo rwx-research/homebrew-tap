@@ -1,20 +1,20 @@
 class Mint < Formula
   desc "Mint is the CI platform with the best developer experience, powering the fastest builds"
   homepage "https://www.rwx.com/mint"
-  version "1.0.0"
+  version "1.1.0"
 
   if OS.mac?
     if Hardware::CPU.intel?
       url "https://github.com/rwx-research/mint-cli/releases/download/v#{version}/mint-darwin-x86_64", user_agent: :fake
-      sha256 "03d6a5f68f4f36a68e27ea3d57b57d05c49eb6669abb9e93dc12c9eac59b3cee"
+      sha256 "f6e3c77cb09a656382bb6ea1aaa4aef69b9a281228670739dc0a3b6fb5ae20d8"
     elsif Hardware::CPU.arm?
       url "https://github.com/rwx-research/mint-cli/releases/download/v#{version}/mint-darwin-aarch64", user_agent: :fake
-      sha256 "f05ba3bf4a26cfc56784447c271b27be0afff880fd21574843b0ab6cb99481a9"
+      sha256 "b2545d35da7220f873bb3bb26231dc23365ccb396aa3b2c55b9dae260ae36432"
     end
   else
     if Hardware::CPU.intel?
       url "https://github.com/rwx-research/mint-cli/releases/download/v#{version}/mint-linux-x86_64", user_agent: :fake
-      sha256 "b8cee4ce07fafd866470db6a8815e0d2b2677d6065d0305e3a3f1fc617e0d4d5"
+      sha256 "2a79ad67c8bb9edd523b131a69fa37804fe24bec48242aa13c841fadd4d5ee2d"
     end
   end
 
