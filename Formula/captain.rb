@@ -1,20 +1,20 @@
 class Captain < Formula
   desc "Captain can detect and quarantine flaky tests, automatically retry failed tests, partition files for parallel execution, and more"
   homepage "https://www.rwx.com/captain"
-  version "1.14.1"
+  version "1.14.2"
 
   if OS.mac?
     if Hardware::CPU.intel?
       url "https://releases.captain.build/v#{version}/darwin/x86_64/captain", user_agent: :fake
-      sha256 "bf940a63e70b2a79e6528359042a9638eebfc651586445bffe9f56cb0c62be29"
+      sha256 "0b21cd0fabcf6dab79e352ce8248044943d44d9179b4140075029b746e4ddd62"
     elsif Hardware::CPU.arm?
       url "https://releases.captain.build/v#{version}/darwin/aarch64/captain", user_agent: :fake
-      sha256 "776e34b29086d8da9c958eb5c8a73e63e0508a780574146a7b34af83424e04c3"
+      sha256 "dc6345cd2ff627dc0785582d3e0a87b1fe91f7b000a506288db89798794f4463"
     end
   else
     if Hardware::CPU.intel?
       url "https://releases.captain.build/v#{version}/linux/x86_64/captain", user_agent: :fake
-      sha256 "89416648843ce7cf8395ae2ee6e9ba160c2ab46cde85c7f7ec8152cea732dfdc"
+      sha256 "d0f6c9cc0204978536b170824dd7d39535b87ceeca8139b82eafce7991858373"
     end
   end
 
