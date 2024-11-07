@@ -10,17 +10,17 @@ jobs:
       matrix:
         include:
           - name: abq
-            version: "1.8.0"
+            version: "1.8.1"
             os: macos-12 # intel
           - name: abq
-            version: "1.8.0"
+            version: "1.8.1"
             os: macos-14 # arm
 
           - name: abq@1
-            version: "1.8.0"
+            version: "1.8.1"
             os: macos-12 # intel
           - name: abq@1
-            version: "1.8.0"
+            version: "1.8.1"
             os: macos-14 # arm
     steps:
       - uses: actions/checkout@v3
@@ -42,9 +42,9 @@ jobs:
       matrix:
         include:
           - name: abq
-            version: "1.8.0"
+            version: "1.8.1"
           - name: abq@1
-            version: "1.8.0"
+            version: "1.8.1"
     steps:
       - name: Install homebrew
         uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
