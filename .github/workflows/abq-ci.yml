@@ -1,6 +1,6 @@
 on:
   pull_request:
-    branches: "main"
+    branches: [main]
 
 jobs:
   test_abq:
@@ -11,14 +11,14 @@ jobs:
         include:
           - name: abq
             version: "1.9.1"
-            os: macos-12 # intel
+            os: macos-13 # intel
           - name: abq
             version: "1.9.1"
             os: macos-14 # arm
 
           - name: abq@1
             version: "1.9.1"
-            os: macos-12 # intel
+            os: macos-13 # intel
           - name: abq@1
             version: "1.9.1"
             os: macos-14 # arm
