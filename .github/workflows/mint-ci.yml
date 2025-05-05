@@ -10,10 +10,10 @@ jobs:
       matrix:
         include:
           - name: mint
-            version: "1.4.1"
+            version: "1.5.0"
             os: macos-13 # intel
           - name: mint
-            version: "1.4.1"
+            version: "1.5.0"
             os: macos-14 # arm
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
       matrix:
         include:
           - name: mint
-            version: "1.4.1"
+            version: "1.5.0"
     steps:
       - name: Install homebrew
         uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
