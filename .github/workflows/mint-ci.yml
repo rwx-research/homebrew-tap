@@ -24,6 +24,8 @@ jobs:
           ! command -v mint
           brew install ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
           mint --version | grep ${{ matrix.version }}
+        env:
+          HOMEBREW_DEVELOPER: 1
 
       - name: Ensure the integrity was verified
         run: '! grep "Cannot verify integrity of" install-output.txt'
