@@ -55,5 +55,5 @@ jobs:
         run: |
           set -o pipefail
           ! command -v captain
-          brew install ${{ matrix.name }}
+          brew install rwx-research/tap/${{ matrix.name }}
           captain --version | grep ${{ matrix.version }}

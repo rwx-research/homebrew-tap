@@ -54,5 +54,5 @@ jobs:
         run: |
           set -o pipefail
           ! command -v abq
-          brew install ${{ matrix.name }}
+          brew install rwx-research/tap/${{ matrix.name }}
           abq --version | grep ${{ matrix.version }}
