@@ -11,10 +11,10 @@ jobs:
         include:
           - name: mint
             version: "1.7.0"
-            os: macos-13 # intel
+            os: macos-15-intel
           - name: mint
             version: "1.7.0"
-            os: macos-14 # arm
+            os: macos-latest # arm
     steps:
       - uses: actions/checkout@v3
 

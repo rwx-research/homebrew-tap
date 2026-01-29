@@ -11,17 +11,17 @@ jobs:
         include:
           - name: captain
             version: "2.5.5"
-            os: macos-13 # intel
+            os: macos-15-intel
           - name: captain
             version: "2.5.5"
-            os: macos-14 # arm
+            os: macos-latest # arm
 
           - name: captain@1
             version: "2.5.5"
-            os: macos-13 # intel
+            os: macos-15-intel
           - name: captain@1
             version: "2.5.5"
-            os: macos-14 # arm
+            os: macos-latest # arm
 
     steps:
       - uses: actions/checkout@v3

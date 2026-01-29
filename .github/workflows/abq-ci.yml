@@ -11,17 +11,17 @@ jobs:
         include:
           - name: abq
             version: "1.9.2"
-            os: macos-13 # intel
+            os: macos-15-intel
           - name: abq
             version: "1.9.2"
-            os: macos-14 # arm
+            os: macos-latest # arm
 
           - name: abq@1
             version: "1.9.2"
-            os: macos-13 # intel
+            os: macos-15-intel
           - name: abq@1
             version: "1.9.2"
-            os: macos-14 # arm
+            os: macos-latest # arm
     steps:
       - uses: actions/checkout@v3
 
