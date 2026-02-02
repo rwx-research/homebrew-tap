@@ -10,17 +10,17 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.6.0"
+            version: "2.6.1"
             os: macos-15-intel
           - name: captain
-            version: "2.6.0"
+            version: "2.6.1"
             os: macos-latest # arm
 
           - name: captain@1
-            version: "2.6.0"
+            version: "2.6.1"
             os: macos-15-intel
           - name: captain@1
-            version: "2.6.0"
+            version: "2.6.1"
             os: macos-latest # arm
 
     steps:
@@ -45,9 +45,9 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.6.0"
+            version: "2.6.1"
           - name: captain@1
-            version: "2.6.0"
+            version: "2.6.1"
     steps:
       - name: Install homebrew
         uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
