@@ -64,7 +64,7 @@ jobs:
         run: |
           set -o pipefail
           ! command -v captain
-          brew trust --formula rwx-research/tap/${{ matrix.name }}
+          brew trust rwx-research/tap
           brew install --formula ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
           captain --version | grep ${{ matrix.version }}
         env:
