@@ -10,17 +10,17 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.8.1"
+            version: "2.8.2"
             os: macos-15-intel
           - name: captain
-            version: "2.8.1"
+            version: "2.8.2"
             os: macos-latest # arm
 
           - name: captain@1
-            version: "2.8.1"
+            version: "2.8.2"
             os: macos-15-intel
           - name: captain@1
-            version: "2.8.1"
+            version: "2.8.2"
             os: macos-latest # arm
 
     steps:
@@ -45,15 +45,30 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.8.1"
+            version: "2.8.2"
           - name: captain@1
-            version: "2.8.1"
+            version: "2.8.2"
     steps:
+      - uses: actions/checkout@v3
+
       - name: Install homebrew
         uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
+      - name: Configure Linux sandbox
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes bubblewrap
+          sudo sysctl -w kernel.unprivileged_userns_clone=1
+          sudo sysctl -w user.max_user_namespaces=28633
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
       - name: Install captain
         run: |
           set -o pipefail
           ! command -v captain
-          brew install rwx-research/tap/${{ matrix.name }}
+          brew trust rwx-research/tap
+          brew install --formula ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
           captain --version | grep ${{ matrix.version }}
+        env:
+          HOMEBREW_DEVELOPER: 1
+
+      - name: Ensure the integrity was verified
+        run: '! grep "Cannot verify integrity of" install-output.txt'
