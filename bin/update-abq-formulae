@@ -30,6 +30,11 @@ function getSHA() {
     return
   fi
 
+  if [[ "$url" == *"x86-64"* ]]; then
+    echo "${sha}"
+    return
+  fi
+
   (cd tmp && tar -xvf abq.tar && mv abq_*/abq ./ && cd -) &>/dev/null
   chmod +x ./tmp/abq
   output=$(./tmp/abq --version)
