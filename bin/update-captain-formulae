@@ -29,6 +29,11 @@ function getSHA() {
     return
   fi
 
+  if [[ "$url" == *"x86_64"* ]]; then
+    echo "${sha}"
+    return
+  fi
+
   chmod +x ./tmp/captain
   output=$(./tmp/captain --version)
   if ! (echo "${output}" | grep "v${expectedVersion}" &>/dev/null); then
