@@ -10,17 +10,17 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-15-intel
           - name: captain
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-latest # arm
 
           - name: captain@1
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-15-intel
           - name: captain@1
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-latest # arm
 
     steps:
@@ -45,9 +45,9 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.9.1"
+            version: "2.9.2"
           - name: captain@1
-            version: "2.9.1"
+            version: "2.9.2"
     steps:
       - uses: actions/checkout@v3
 
