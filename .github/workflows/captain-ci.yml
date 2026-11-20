@@ -10,27 +10,31 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-15-intel
           - name: captain
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-latest # arm
 
           - name: captain@1
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-15-intel
           - name: captain@1
-            version: "2.9.1"
+            version: "2.9.2"
             os: macos-latest # arm
 
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install homebrew
+        uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
+
       - name: Install captain & run it
         run: |
           set -o pipefail
           ! command -v captain
-          brew install ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
+          brew trust rwx-research/tap
+          brew install rwx-research/tap/${{ matrix.name }} 2>&1 | tee install-output.txt
           captain --version | grep ${{ matrix.version }}
         env:
           HOMEBREW_DEVELOPER: 1
@@ -45,9 +49,9 @@ jobs:
       matrix:
         include:
           - name: captain
-            version: "2.9.1"
+            version: "2.9.2"
           - name: captain@1
-            version: "2.9.1"
+            version: "2.9.2"
     steps:
       - uses: actions/checkout@v3
 
@@ -65,7 +69,7 @@ jobs:
           set -o pipefail
           ! command -v captain
           brew trust rwx-research/tap
-          brew install --formula ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
+          brew install --formula rwx-research/tap/${{ matrix.name }} 2>&1 | tee install-output.txt
           captain --version | grep ${{ matrix.version }}
         env:
           HOMEBREW_DEVELOPER: 1

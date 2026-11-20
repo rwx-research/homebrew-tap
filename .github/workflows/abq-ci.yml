@@ -25,11 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install homebrew
+        uses: Homebrew/actions/setup-homebrew@5caa94335a28d8fdf5a478ae8586f2da40a0a989
+
       - name: Install abq & run it
         run: |
           set -o pipefail
           ! command -v abq
-          brew install ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
+          brew trust rwx-research/tap
+          brew install rwx-research/tap/${{ matrix.name }} 2>&1 | tee install-output.txt
           abq --version | grep ${{ matrix.version }}
         env:
           HOMEBREW_DEVELOPER: 1
@@ -64,7 +68,7 @@ jobs:
           set -o pipefail
           ! command -v abq
           brew trust rwx-research/tap
-          brew install --formula ./Formula/${{ matrix.name }}.rb 2>&1 | tee install-output.txt
+          brew install --formula rwx-research/tap/${{ matrix.name }} 2>&1 | tee install-output.txt
           abq --version | grep ${{ matrix.version }}
         env:
           HOMEBREW_DEVELOPER: 1
